@@ -2,7 +2,7 @@
 
    Web application developed with ASP.NET
  
- * Team project with @FloreaMaria
+ * Team project with [@FloreaMaria](https://github.com/FloreaMaria)
  * General info:
    * ASP.NET project developed in Visual Studio 2017
    * code in C#

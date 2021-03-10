@@ -4,7 +4,7 @@
  
  * Team project with @FloreaMaria
  * General info:
- * * ASP.NET project developed in Visual Studio 2019
+ * * ASP.NET project developed in Visual Studio 2017
  * * code in C#
  * * Entity Framework 
  * * MVC architecture

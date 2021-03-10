@@ -1,0 +1,140 @@
+﻿<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title> M&F SHOP</title>
+    @Styles.Render("~/Content/css")
+    @Scripts.Render("~/bundles/modernizr")
+    <link rel="shortcut icon" href="/Files/bufnita3.ico" type="image/x-icon" />
+    <link href="http://cdnjs.cloudflare.com/ajax/libs/summernote/0.8.12/summernote.css" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Langar&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+</head>
+@{ 
+    var v = ViewBag.Cart as List<Proiect_DAW2.Models.Item>;
+}
+<body>
+    <style>
+        .dropbtn {
+           
+            background-color: #3A555E;
+            color: white;
+            padding: 16px;
+            font-size: 16px;
+            
+        }
+
+        .dropdown {
+            position: relative;
+            display: inline-block;
+        }
+
+        .dropdown-content {
+            display: none;
+            position: absolute;
+            background-color: #f1f1f1;
+            min-width: 160px;
+            box-shadow: 0px 8px 16px 0px rgba(0,0,0,0.2);
+            z-index: 1;
+        }
+
+        .dropdown-content a {
+            color: black;
+            padding: 12px 16px;
+            text-decoration: none;
+            display: block;
+        }
+
+        .dropdown-content a:hover {
+            background-color: #ddd;
+        }
+
+        .dropdown:hover .dropdown-content {
+            display: block;
+        }
+
+        .dropdown:hover .dropbtn {
+            background-color: #5c8492;
+            color: #d3d3d3;
+        }
+    </style>
+
+
+
+
+
+    <div class="navbar navbar-fixed-top">
+        <div class="container">
+            <div class="navbar-header">
+                <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                </button>
+
+
+            </div>
+            <div class="navbar-collapse collapse">
+                <ul class="nav navbar-nav">
+                    <li onclick="location.href='/Home/Index';">
+                        <img src="~/Files/buf2.ico" style="width: 70px;  padding:0; cursor:pointer" />
+                    <li />
+                    <li>@Html.ActionLink("Carti", "Index", "Books")</li>
+                    <li>@Html.ActionLink("Despre", "About", "Home")</li>
+                    <li>@Html.ActionLink("Autori", "Index", "Authors")</li>
+                    @if (ViewBag.esteAdmin == true)
+                    {
+                        <li>
+                            <div class="dropdown">
+                                <button class="dropbtn">Optiuni</button>
+                                <div class="dropdown-content">
+                                    <a href="/Users/Index">Useri</a>
+                                    <a href="/Categories/New">Adauga categorie</a>
+                                    <a href="/Books/New">Adauga carte</a>
+                                    <a href="/Authors/New">Adauga autor</a>
+                                </div>
+                            </div>
+                        </li>
+
+                    }
+                    @if (ViewBag.esteColaborator == true)
+                    {
+                    <li>@Html.ActionLink("Adauga carte", "New", "Books")</li>
+                    <li>@Html.ActionLink("Adauga autor", "New", "Authors")</li>
+                    }
+
+                    <li>
+                        <div class="searchbox">
+                            @using (Html.BeginForm(actionName: "Cauta", controllerName: "Home"))
+                            {
+                            @Html.TextBox("SearchName", null, new { @class = "search", @placeholder = "Cauta..", @required = "required"  })
+                            <button type="submit" id="butonsearch"><i class="fa fa-search"></i></button>
+
+                            }
+                        </div>
+
+                    </li>
+
+                </ul>
+                @Html.Partial("_LoginPartial")
+            </div>
+        </div>
+    </div>
+
+    <div class="container body-content">
+        @RenderBody()
+        <hr />
+
+    </div>
+
+    @Scripts.Render("~/bundles/jquery")
+    @Scripts.Render("~/bundles/bootstrap")
+    @RenderSection("scripts", required: false)
+
+
+
+</body>
+</html>

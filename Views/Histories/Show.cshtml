@@ -1,0 +1,60 @@
+﻿
+@model Proiect_DAW2.Models.History
+
+@{
+                ViewBag.Title = "Index";
+}
+
+
+<p>COMENZILE MELE</p>
+
+<br /><br />
+<br /><br /><br />
+<div style="width: 75%; margin-left:13%; background-color:white; border-radius:2%">
+    @if (ViewBag.istoricGol == true)
+     {
+        <h2>NICIO COMANDA IN ISTORIC</h2>
+     }
+    else
+    {
+        <div style=" padding:2.5%">
+            <table style="text-align:center; width: 100%">
+                <thead style="display:table-header-group; background-color: lightgrey">
+                    <tr style="border-bottom: 1px solid grey; padding:5%">
+                        <th style="text-align:center; padding: 1%">Comanda #</th>
+                        <th style="text-align:center">Data</th>
+                        <th style="text-align:center">Totalul comenzii</th>
+                        <th style="text-align:center">Statusul comenzii</th>
+                        <th style="text-align:center">&nbsp</th>
+                    </tr>
+                </thead>
+                <tbody style="display:table-row-group; justify-content:space-between; background-color:white">
+                    @foreach (var order in Model.Orders)
+                    {
+                        if (order.Total != 0)
+                        {
+                            <tr style="border-bottom:1px solid lightgrey">
+                                <td style="text-align:center">@order.OrderId</td>
+                                <td style="text-align:center">@order.OrderDate.ToString("dd-MM-yyyy")</td>
+                                <td style="text-align:center">@order.Total lei</td>
+                                <td style="text-align:center">Confirmata integral</td> &nbsp; &nbsp;
+                                <td style="text-align:center"><a href="/Orders/Show/@order.OrderId">Vezi comanda</a></td>
+                            </tr>
+                        }
+
+                    }
+
+                </tbody>
+            </table>
+        </div>
+    
+    }
+
+</div>
+
+
+<br /><br />
+
+<footer>
+    <p>&copy; @DateTime.Now.Year FLAVIA SI MARIA </p>
+</footer>

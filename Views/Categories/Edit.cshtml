@@ -1,0 +1,23 @@
+﻿@model Proiect_DAW2.Models.Category
+<br /><br /><br /><br />
+<h2>Editare categorie</h2>
+
+@using (Html.BeginForm(actionName: "Edit", controllerName: "Categories"))
+{
+
+    @Html.HttpMethodOverride(HttpVerbs.Put)
+
+    @Html.HiddenFor(m => m.CategoryId)
+
+    @Html.Label("CategoryName", "Denumire categorie")
+    <br />
+    @Html.Editor("CategoryName")
+    <br /><br />
+
+    <button class="btn btn-success" type="submit">Modifica categoria</button>
+
+}
+
+<footer>
+    <p>&copy; @DateTime.Now.Year FLAVIA SI MARIA </p>
+</footer>

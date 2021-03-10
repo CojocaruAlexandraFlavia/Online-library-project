@@ -1,0 +1,29 @@
+﻿
+@{
+    ViewBag.Title = "Show";
+}
+
+
+@model Proiect_DAW2.Models.ApplicationUser
+
+<br /><br /><br /><br />
+<h2>Nume: @Model.LastName</h2>
+<br />
+<h2>Prenume: @Model.FirstName</h2>
+<br />
+<h2>Username: @Model.UserName</h2>
+<br />
+<h3>Rol: @ViewBag.roleName</h3>
+<br />
+<h3>Nr telefon: @Model.PhoneNumber</h3>
+<br />
+<h3>Email: @Model.Email</h3>
+
+@using (Html.BeginForm(actionName: "Delete", controllerName: "Users", routeValues: new { id = @Model.Id }))
+{
+    @Html.HttpMethodOverride(HttpVerbs.Delete)
+    <button type="submit" class="btn btn-danger">Stergere utilizator</button>
+}
+    <footer>
+        <p>&copy; @DateTime.Now.Year FLAVIA SI MARIA </p>
+    </footer>

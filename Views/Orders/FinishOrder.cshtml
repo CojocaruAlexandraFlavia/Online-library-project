@@ -1,0 +1,22 @@
+﻿@model Proiect_DAW2.Models.Order
+
+@{
+    ViewBag.Title = "Finish Order";
+}
+
+<h2>Finish Order</h2>
+<br />
+@using (Html.BeginForm("FinishOrder", "Orders", FormMethod.Post))
+{
+    @Html.Label("Adress", "Adresa")
+    <br />
+    @Html.TextBox("Adress", null, new { @class = "form-control" })
+    <br />
+    @Html.ValidationMessageFor(m => m.Adress, null, new { @class = "text-danger" })
+
+    <button class="btn btn-sm btn-success" type="submit">Plaseaza comanda</button>
+}
+<br /><br />
+    <footer>
+        <p>&copy; @DateTime.Now.Year FLAVIA SI MARIA </p>
+    </footer>

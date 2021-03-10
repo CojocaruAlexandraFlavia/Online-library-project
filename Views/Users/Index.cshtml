@@ -1,0 +1,56 @@
+﻿@{
+    ViewBag.Title = "Afisare utilizatori";
+}
+
+<h2 style="margin-left:1.5%">@ViewBag.Title</h2>
+<br /><br />
+@foreach (var user in ViewBag.UsersList)
+{
+    <br /><br />
+    <div style="border-bottom: 1px solid lightgrey">
+    </div>
+    <div class="panel-heading">Nume utilizator: @user.UserName</div>
+    <div class="panel-body">
+        <i class="glyphicon glyphicon-envelope"></i> Email utilizator: <span class="label label-default">@user.Email</span>
+        <br /><br />
+        @if (@user.PhoneNumber != null)
+        {
+            <i class="glyphicon glyphicon-phone"></i>@:Telefon utilizator:
+            <span class="label label-default">@user.PhoneNumber</span>
+        }
+    </div>
+    <div class="row">
+        <div class="col-md-2" style="margin-left:1.25%">
+            <a class="btn btn-sm btn-success" href="/Users/Edit/@user.Id"> Editare utilizator</a>
+        </div>
+        <div class="col-md-2">
+            <a class="btn btn-sm btn-success" href="/Users/Show/@user.Id"> Vizualizare utilizator</a>
+        </div>
+
+    </div>
+
+}
+
+<div>
+    <nav aria-label="Page navigation">
+        <ul class="pagination">
+            <li>
+                <a href="/Users/Index?page=1" aria-label="Previous">
+                    <span aria-hidden="true">&laquo;</span>
+                </a>
+            </li>
+            @for (int i = 1; i <= ViewBag.lastPage; i++)
+            {
+                <li><a href="/Users/Index?page=@i">@(i)</a></li>
+            }
+            <li>
+                <a href="/Users/Index?page=@(ViewBag.lastPage)" aria-label="Next">
+                    <span aria-hidden="true">&raquo;</span>
+                </a>
+            </li>
+        </ul>
+    </nav>
+</div>
+<footer>
+    <p>&copy; @DateTime.Now.Year FLAVIA SI MARIA </p>
+</footer>

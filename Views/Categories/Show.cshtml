@@ -1,0 +1,73 @@
+﻿@model Proiect_DAW2.Models.Category
+
+<h2>@ViewBag.Title</h2>
+
+<h2>@Model.CategoryName</h2>
+
+<br />
+
+@if (Model.Books.Count == 0)
+
+{
+    <div class="continut" style="padding-left:30%">
+        <p style="font-size:28px; font-weight:bold; ">
+            Nu exista carti in aceasta categorie!
+        </p>
+       
+    </div>
+}
+else
+{
+    <div class="continut" style="padding-left :0">
+
+        <div class="carti" style=" display:flex; width:100%">
+
+            @foreach (var book in Model.Books)
+            {
+                if (book.Permission == true)
+                {
+                    <div class="column" style="width:17%">
+                        <a href="/Books/Show/@book.BookId"><img src="~/Files/@book.ImageId" class="imagine_index" /></a>
+                        <br />
+                        <h4><a href="/Books/Show/@book.BookId" class="titlu_index">@book.Title</a> </h4>
+                        @foreach (var author in book.Authors)
+                        {
+                            <a href="/Authors/Show/@author.AuthorId" style="color:#3A555E">
+                                <p class="autor_index">@author.FirstName @author.LastName</p>
+                            </a>
+                            break;
+                        }
+                        <br />
+                    </div>
+
+                }
+            }
+
+        </div>
+    </div>
+}
+
+
+
+<br /><br />
+<a class="btn btn-primary" href="/Books/Index/">Inapoi la carti</a><br /><br />
+
+@if (ViewBag.esteAdmin)
+{
+    <a class="btn btn-success" href="/Categories/Edit/@Model.CategoryId">Editare categorie</a>
+    <br />
+    <br />
+    using (Html.BeginForm(actionName: "Delete", controllerName: "Categories", method: FormMethod.Post, routeValues: new { id = @Model.CategoryId }))
+    {
+        @Html.HttpMethodOverride(HttpVerbs.Delete)
+        <button class="btn btn-danger" type="submit">Sterge categoria</button>
+    }
+    <br />
+}
+
+
+<br /><hr /><br />
+
+<footer>
+    <p>&copy; @DateTime.Now.Year FLAVIA SI MARIA </p>
+</footer>

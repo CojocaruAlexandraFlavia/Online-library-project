@@ -1,0 +1,24 @@
+﻿
+@using Proiect_DAW2.Models
+@model Proiect_DAW2.Models.Order
+
+@{
+    var i = 0;
+}
+
+@foreach (Item item in (List<Item>)Session["cart"])
+{
+<tr>
+    <td><a href="@Url.Action("Remove", "Order", new { id = item.Book.BookId })">Remove</a></td>
+   
+    <td> i </td>
+    <td><img src="~/Files/@item.Book.ImageId" width="60" /> </td>
+    <td>@item.Book.Title</td>
+    <td>@item.Book.Price</td>
+    <td>@item.Quantity</td>
+    <td>@(item.Book.Price * item.Quantity)</td>
+</tr>
+}
+<footer>
+    <p>&copy; @DateTime.Now.Year FLAVIA SI MARIA </p>
+</footer>

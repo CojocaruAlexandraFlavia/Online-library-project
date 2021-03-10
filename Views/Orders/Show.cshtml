@@ -1,0 +1,63 @@
+﻿@using Proiect_DAW2.Models
+
+@model Proiect_DAW2.Models.Order
+
+<br /><br />
+
+@{
+    double subtotal = 0;
+}
+
+<br /><br /><br />
+<div style="width: 75%; margin-left:13%; background-color:white; border-radius:2%">
+    <h3 style="text-align:center">Data comenzii: @Model.OrderDate.Date.ToString("dd-MM-yyyy")</h3>
+    <div style="border-bottom: 1px solid lightgrey"></div>
+    <br /><br />
+
+    <div style=" margin-left:5%; margin-right:5%; padding-bottom:5%">
+            <h3>Articole comandate:</h3>
+        <div style="border-bottom: 1px solid lightgrey"></div>
+            <table style="text-align:center; width: 100%">
+                <thead style="display:table-header-group; background-color: lightgrey">
+                    <tr style="border-bottom: 1px solid grey; padding:5%">
+                        <th style="text-align:center; padding: 1%">Produs</th>
+                        <th style="text-align:center">Pret</th>
+                        <th style="text-align:center">Cantitate</th>
+                        <th style="text-align:center">Subtotal</th>
+                    </tr>
+                </thead>
+                <tbody style="display:table-row-group; justify-content:space-between; background-color:white">
+                    @foreach (var item in Model.Items)
+                    {
+                        <tr style="border-bottom:1px solid lightgrey">
+                            <td style="width:25%; text-align:center"> @item.Book.Title</td>
+                            <td style="text-align:center; width:25%">@(item.Book.Price - item.Book.Price * item.Book.Discount / 100)</td>
+                            <td style="text-align:center; width: 25%">@item.Quantity </td>
+                            <td style="text-align:center; width: 25%">@(item.Quantity * (item.Book.Price - item.Book.Price * item.Book.Discount / 100))</td> &nbsp; &nbsp;
+                            @{ subtotal += (item.Quantity * (item.Book.Price - item.Book.Price * item.Book.Discount / 100));}
+                        </tr>
+                                }
+
+                </tbody>
+            </table>
+            <br />
+            <div style="background-color: lightgray; padding:1%; border-radius:2%">
+                <div style="text-align:right">
+                    <span style="display:inline-block">Subtotal:</span>
+                    <span style="display:inline-block">@subtotal</span>
+                </div>
+                <div style="text-align: right">
+                    <span style="display:inline-block">Taxa de livrare:</span>
+                    <span style="display:inline-block">15 lei</span>
+                </div>
+                <div style="text-align: right">
+                    <span style="display:inline-block; font-weight:bold">Total:</span>
+                    <span style="display:inline-block">@Model.Total</span>
+                </div>
+            </div>
+    </div>
+</div>
+<br /><br />
+<footer>
+    <p>&copy; @DateTime.Now.Year FLAVIA SI MARIA </p>
+</footer>

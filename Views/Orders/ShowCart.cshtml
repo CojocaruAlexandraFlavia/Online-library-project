@@ -1,0 +1,179 @@
+﻿@using Proiect_DAW2.Models
+@model Proiect_DAW2.Models.Order
+@Styles.Render("~/Content/css")
+
+@{
+    ViewBag.Title = "ShowCart";
+}
+<br /><br /><br />
+<h1>@ViewBag.Message</h1>
+<h1>@TempData["order"]</h1>
+<h1>@TempData["cantitate"]</h1>
+<h1>@TempData["cant"]</h1>
+@{
+    var i = 0;
+    var j = 0;
+    double total = 0;
+}
+
+<style>
+    .dropbtn {
+        background-color: #3A555E;
+        color: white;
+        padding: 16px;
+        font-size: 16px;
+    }
+
+    .dropdown {
+        position: relative;
+        display: inline-block;
+    }
+
+    .dropdown-content {
+        display: none;
+        position: absolute;
+        background-color: #f1f1f1;
+        min-width: 160px;
+        box-shadow: 0px 8px 16px 0px rgba(0,0,0,0.2);
+        z-index: 1;
+    }
+
+        .dropdown-content a {
+            color: black;
+            padding: 12px 16px;
+            text-decoration: none;
+            display: block;
+        }
+
+            .dropdown-content a:hover {
+                background-color: #ddd;
+            }
+
+    .dropdown:hover .dropdown-content {
+        display: block;
+    }
+
+    .dropdown:hover .dropbtn {
+        background-color: #5c8492;
+        color: #d3d3d3;
+    }
+</style>
+<br /><br />
+@if (Session["cart"] != null)
+{
+    foreach (Item item in (List<Item>)Session["cart"])
+    {
+        <br />
+        j++;
+        <div class="itemm">
+
+            @{
+                i++;
+            }
+
+            <div class="cantitate">
+
+                @item.Quantity
+            </div>
+            <div class="cantitate">
+                X
+            </div>
+            <div class="imagine">
+                <img src="~/Files/@item.Book.ImageId" />
+            </div>
+            <div class="titlu">
+                <a href="/Books/Show/@item.BookId"> @item.Book.Title</a>
+
+            </div>
+            <div class="p1">
+                @{ var p = @item.Book.Price - (@item.Book.Price * @item.Book.Discount / 100);
+                    p = Math.Round(p, 2);}
+                Pret: @p  lei
+            </div>
+
+            <div class="plusminus">
+                <div class="borderbox">
+                    <a href="/Orders/IncreaseQuantity/@item.ItemId" class="button"> +</a>
+                </div>
+
+            </div>
+
+
+            <div class="plusminus">
+                <div class="borderbox">
+                    <a href="/Orders/DecreaseQuantity/@item.ItemId" class="button"> - </a>
+                </div>
+
+            </div>
+
+
+            <div class="titlu">
+                <a href="@Url.Action("Remove", "Orders", new { id = item.Book.BookId })" style="color:red; font-weight:bold">Șterge</a>
+            </div>
+
+            <div class="pret">
+                Preț total:  @(p * @item.Quantity) lei
+                @{
+                    total = total + p * @item.Quantity;
+                }
+            </div>
+
+        </div>
+    }
+    <br />
+
+    <div class="pret_total">
+        Total produse: @total lei
+
+    <br />
+        <p> Cost transport : 15 lei</p>
+    </div>
+    <br /><br /><br />
+    if (j > 0)
+    {
+        <div class="total_comanda">
+            TOTAL COMANDA :  @(total + 15) lei <br />
+            <div style= position: relative">
+                <a class="btn btn-success"  style="height:30%; width:40%; font-size:20px; background-color:aliceblue; color: black; font-weight:bold; border-color:cornflowerblue"href="/Orders/FinishOrder">Finalizeaza comanda</a><br />
+            </div>
+        </div>
+        <br />
+        j = 0;
+    }
+    else
+    {
+        <div class="emptycart" style="margin-left:40%;color:cadetblue;font-size:50px ">
+            <br /> <br /> <br />
+
+            <h3>
+                Cosul tau este gol!
+            </h3>
+        </div>
+    }
+
+
+
+}
+
+else
+{
+    <div class="emptycart" style="margin-left:40%;color:cadetblue;font-size:50px ">
+        <br /> <br /> <br />
+
+        <h3>
+            Cosul tau este gol!
+        </h3>
+    </div>
+
+
+}
+<br />
+<br />
+<br />
+<div class="emptycart1">
+    <a class="btn btn-primary" href="/Books/Index">Continua cumparaturile</a>
+</div>
+<br /><br />
+<footer>
+    <p>&copy; @DateTime.Now.Year FLAVIA SI MARIA </p>
+</footer>

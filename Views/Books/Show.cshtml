@@ -1,0 +1,381 @@
+<style>
+    .starFade {
+        background-image: url(../../Files/StarFade.gif);
+        min-width: 30px;
+        min-height: 30px;
+        display: inline-block;
+        cursor: pointer;
+        background-color: inherit;
+    }
+
+    .starFadeN {
+        background-image: url(../../Files/StarFade.gif);
+        min-width: 30px;
+        min-height: 30px;
+        display: inline-block;
+        background-color: inherit;
+    }
+
+    .starGlow {
+        background-image: url(../../Files/star-28x28.png);
+        min-width: 30px;
+        min-height: 30px;
+        display: inline-block;
+        cursor: pointer;
+        background-color: inherit;
+    }
+
+    .starGlowN {
+        background-image: url(../../Files/star2-28x28.jpg);
+        min-width: 30px;
+        min-height: 30px;
+        display: inline-block;
+        background-color: inherit;
+        cursor: pointer;
+    }
+
+    .show1 {
+        height: auto;
+        background-color: white;
+        padding: 5%;
+        border-radius: 5px;
+        border: solid 2px #ccc;
+        justify-content: space-between;
+    }
+
+    #overlay_text {
+        position: relative;
+        padding-left: 5%;
+        padding-bottom: 5%;
+        font-size: 20px;
+        top: 10.05%;
+        z-index: 2;
+        width: 20%;
+        height: 5%;
+        background-color: red;
+        left: -30%;
+        float: right;
+        color: white;
+        font-weight: bold
+    }
+
+    #pret_initial {
+        display: flex;
+        text-align: center;
+        margin-left: 35%
+    }
+
+    #pret {
+        text-decoration: line-through;
+        text-align: center
+    }
+
+    #detalii {
+        border: 1px solid #cde0f1;
+        width: 100%;
+        display: flex;
+        height: auto;
+    }
+
+    #pret2 {
+        display: inline-block;
+        font-weight: bold;
+        color: blue
+    }
+
+    #adauga_cos {
+        width: 50%;
+        margin-left: 20%;
+        margin-top: 20%
+    }
+
+    #descriere {
+        background-color: white;
+        height: auto;
+        width: 10%;
+        padding: 10px;
+        border-left: solid 1px #ccc;
+        border-right: solid 1px #ccc;
+        border-top: solid 1px #ccc;
+        text-align: center;
+        font-size: 2.5vh;
+    }
+
+    #continut_descriere {
+        background-color: white;
+        padding: 10px;
+        border: solid 1px #ccc;
+        border-radius: 5px;
+        padding-bottom: 3%;
+        font-size: 2.2vh;
+        height: auto;
+    }
+
+    .imagine_show {
+        height: 75%;
+        padding: 10px;
+        margin-left: 15%;
+        border: 0.1px solid #cde0f1;
+        width: 50%;
+        position: relative;
+        top: 10%;
+    }
+</style>
+
+
+@model Proiect_DAW2.Models.Book
+
+<h1>@TempData["message"]</h1>
+<br />
+<br />
+@{
+    var nr_reviews = Model.Reviews.Count;
+}
+<br /><br />
+<div class="continut">
+    <div class="col-md-6">
+        @if (Model.Discount > 0)
+        {
+        <span id="overlay_text">-@Model.Discount%</span>
+        }
+
+        <img src="~/Files/@Model.ImageId" class="imagine_show" />
+
+
+    </div>
+    <div style="width:50%" class="col-md-6">
+        <h2 style="text-align:center; font-weight:bold"> @Model.Title</h2>
+
+        <div style="height: auto; text-align:center">
+            <p>
+                @foreach (var author in @Model.Authors)
+                {
+                <a href="/Authors/Show/@author.AuthorId"><h4> @author.FirstName  @author.LastName   </h4></a>
+                }
+            </p>
+            <h4>Rating: @Model.Rating / 5 (@nr_reviews review-uri)</h4>
+            @{
+
+                double x = @Model.Price - @Model.Price * @Model.Discount / 100;
+                x = Math.Round(x, 2);
+            }
+
+            @if (@Model.Discount > 0)
+            {
+            <div id="pret_initial">
+                <h4>
+                    Pret initial:
+                </h4>
+                &nbsp;
+                <h4 id="pret">
+                    @Model.Price
+                </h4>
+                <h4>&nbsp; lei</h4>
+
+            </div>
+            }
+
+
+            @if (Model.NrExemplaries > 0)
+            {
+            <p style="color:green">IN STOC</p>
+            }
+            else
+            {
+            <p style="color: red">STOC INDISPONIBIL</p>
+            }
+        </div>
+        <br />
+        <div id="detalii">
+            <div style="width: 50%; margin-left: 5%">
+                <h4 id="pret2">Pret: @x lei</h4>
+                <p>Editura: @Model.PublishingHouse</p>
+                <p>Categorie: @Model.Category.CategoryName</p>
+                <p>Limba: @Model.Language</p>
+                <p>Anul aparitiei: @Model.ReleaseYear</p>
+                <p>Numar pagini: @Model.NrPages</p>
+            </div>
+
+            <div id="adauga_cos">
+                @if (Model.NrExemplaries > 0)
+                {
+                <a class="btn btn-info" style="display:inline-block" href="/Orders/Buy/@Model.BookId"> Adauga in cos   <span class="glyphicon glyphicon-shopping-cart" style="margin-left:10px"></span></a>
+                }
+            </div>
+        </div>
+        <br />
+
+    </div>
+
+
+</div>
+<div style="height:auto;">
+    <div id="descriere">
+        Descriere
+    </div>
+    <div class="col">
+        <div id="continut_descriere">
+            @Model.Description
+        </div>
+        </div>
+</div>
+
+@if (ViewBag.esteAdmin || ViewBag.utilizatorCurent == Model.UserId)
+{
+<div style=" margin-top:5%">
+    <div class="pull-left">
+        @using (Html.BeginForm(actionName: "Delete", controllerName: "Books", routeValues: new { id = @Model.BookId }))
+                {
+        @Html.HttpMethodOverride(HttpVerbs.Delete)
+        <button type="submit" class="btn btn-danger" style="margin-top:2%">Stergere carte</button>
+                }
+    </div>
+    <div class="pull-right">
+        <a class="btn btn-primary" style=" margin-top:2%" href="/Books/Edit/@Model.BookId"> Modifica  carte</a>
+    </div>
+
+</div>
+<br />
+}
+<br /><br /><br />
+<div class="show1">
+    <h2 style="margin-left:2%; margin-top:0">Ai cumparat acest produs? Spune-ti parerea!</h2>
+    <form id="Form" method="post" action="/Books/Show/@Model.BookId">
+        <br />
+        <input type="hidden" name="BookId" value="@Model.BookId" />
+        <div class="row">
+            <div class="col-md-3">
+                <h4 style="margin-left:10%">Acorda o nota produsului</h4>
+            </div>
+            <div class="col-md-3">
+                <div onmouseout="CRateSelected()">
+                    <span class="starFade" id="Rate1" onclick="CRate(1)" onmouseover="CRateOver(1)" onmouseout="CRateOut(1)"></span>
+                    <span class="starFade" id="Rate2" onclick="CRate(2)" onmouseover="CRateOver(2)" onmouseout="CRateOut(2)"></span>
+                    <span class="starFade" id="Rate3" onclick="CRate(3)" onmouseover="CRateOver(3)" onmouseout="CRateOut(3)"></span>
+                    <span class="starFade" id="Rate4" onclick="CRate(4)" onmouseover="CRateOver(4)" onmouseout="CRateOut(4)"></span>
+                    <span class="starFade" id="Rate5" onclick="CRate(5)" onmouseover="CRateOver(5)" onmouseout="CRateOut(5)"></span>
+                </div>
+            </div>
+        </div>
+        <input type="hidden" name="Stars" id="Rating" value="0" />
+        <br />
+        <div class="row">
+            <div class="col-md-3">
+                <h4 style="margin-left:10%">Adauga un comentariu</h4>
+            </div>
+            <div class="col-md-7">
+                <textarea class="form-control" name="Content"></textarea>
+                @Html.ValidationMessage("Content", "", new { @class = "text-danger" })
+                <br />
+            </div>
+        </div>
+        <button class="btn btn-success " type="submit" style="margin:2.5%">Adauga review</button>
+
+    </form>
+    <div style="border-bottom: 1px solid lightgrey">
+    </div>
+    <h2 style="margin-left:0">Review-uri</h2>
+    <br />
+    @foreach (var rev in Model.Reviews)
+    {
+    <div class="row">
+        <div class="col-md-4">
+            <i class="glyphicon glyphicon-user"></i>
+            @if (rev.UserId == ViewBag.idAdmin)
+            {
+             <strong>Admin</strong>
+            }
+            else
+            {
+            <strong> @rev.User.FirstName &nbsp; @rev.User.LastName </strong>
+            }
+            <br />
+            <small>@rev.Date.ToString("dd/MM/yyyy")</small>
+            <br />
+            @for (var i = 1; i <= rev.Stars; i++)
+            {
+            <span class="starGlowN"></span>
+            }
+            @for (var i = (rev.Stars + 1); i <= 5; i++)
+            {
+            <span class="starFadeN"></span>
+            }
+        </div>
+        <div class="col-md-8">
+            @rev.Content
+        </div>
+
+
+    </div>
+        if (rev.UserId == ViewBag.utilizatorCurent || ViewBag.esteAdmin)
+        {
+    <div style="display: inline-block; float : left; margin-right: 15px">
+        <a class="glyphicon glyphicon-pencil" href="/Reviews/Edit/@rev.ReviewId"></a>
+    </div>
+    <div style="display: inline-block; float : left">
+        <form method="post" action="/Reviews/Delete/@rev.ReviewId">
+            @Html.HttpMethodOverride(HttpVerbs.Delete)
+            <button class="glyphicon glyphicon-trash" style="border: none; background: transparent" type="submit"></button>
+        </form>
+    </div>
+        }
+    <hr />
+    }
+</div>
+
+<br />
+
+<a class="btn btn-info" href="/Books/Index">Inapoi la carti</a>
+<br />
+
+<br />
+
+<script>
+    function SCRate() {
+        for (var i = 1; i <= @Model.Rating; i++) {
+            $("#sRate" + i).attr('class', 'starGlowN');
+        }
+    }
+    $(function(){
+        SCRate();
+    });
+    function CRate(r) {
+        $("#Rating").val(r);
+        for (var i = 1; i <= r; i++) {
+            $("#Rate" + i).attr('class', 'starGlowN');
+        }
+        for (var i = r + 1; i <= 5; i++) {
+            $("#Rate" + i).attr('class', 'starFade');
+        }
+
+    }
+
+    function CRateOver(r) {
+        for (var i = 1; i <= r; i++) {
+            $("#Rate" + i).attr('class', 'starGlowN');
+        }
+    }
+
+    function CRateOut(r) {
+        for (var i = 1; i <= r; i++) {
+            $("#Rate" + i).attr('class', 'starFade');
+        }
+    }
+
+    function CRateSelected() {
+        var setRating = $("#Rating").val();
+        for (var i = 1; i <= setRating;
+           i++) {
+            $("#Rate" + i).attr('class', 'starGlowN');
+        }
+    }
+
+
+</script>
+
+<footer>
+    <p>&copy; @DateTime.Now.Year FLAVIA SI MARIA </p>
+</footer>
+
+
+

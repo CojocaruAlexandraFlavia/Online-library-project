@@ -1,0 +1,124 @@
+﻿
+@{
+    ViewBag.Title = "OrderDescStars";
+}
+
+<h2>OrderDescStars</h2>
+
+
+
+
+
+<br /><br /><br />
+<div class="continut">
+    <div class="amandoua">
+        <div class="dropdown">
+            <button class="dropbtn">Sorteaza</button>
+            <div class="dropdown-content">
+                <a href="/Books/OrderAscPrice">Crescator dupa pret</a>
+                <a href="/Books/OrderDescPrice">Descrescator dupa pret</a>
+                <a href="/Books/OrderAscStars">Crescator dupa rating</a>
+                <a href="/Books/OrderDescStars">Descrescator dupa rating</a>
+            </div>
+        </div>
+        <br /><br />
+        <br /><br />
+
+        <div class="lista_categorii">
+
+            <ul>
+                @foreach (var categ in ViewBag.Categories)
+            {
+                <li><a href="/Categories/Show/@categ.CategoryId">@categ.CategoryName</a></li>
+            }
+            </ul>
+        </div>
+    </div>
+
+
+    <div class="carti">
+
+        @foreach (var book in ViewBag.Books)
+            {
+                if (book.Permission == true)
+                {
+        <div class="column">
+            <a href="/Books/Show/@book.BookId"><img src="~/Files/@book.ImageId" class="imagine_index" /></a>
+            <br />
+            <h4><a href="/Books/Show/@book.BookId" style="color:black; text-overflow: ellipsis;  font-size:86%; font-weight:bold">@book.Title</a> </h4>
+            @foreach (var author in book.Authors)
+                                                {
+            <a href="/Authors/Show/@author.AuthorId" style="color:#3A555E">
+                <p style="text-overflow: ellipsis; text-align:justify;  display: block;">@author.FirstName @author.LastName</p>
+            </a>
+                                                    break;
+                                                }
+            <br />
+        </div>
+
+                }
+                else
+                {
+                    if (ViewBag.esteAdmin == true && book.Permission == false)
+                    {
+
+        <div class="c1">
+            <div class="column">
+                <div class="row">
+                    <div class="col-md-8">
+                        <a href="/Books/Approval/@book.BookId"> <i class="glyphicon glyphicon-ok" style="color:green"></i></a>
+                    </div>
+                    <div class="col-md-4">
+                        <a href="/Books/Decline/@book.BookId"> <i class="glyphicon glyphicon-remove" style="color:red"></i></a>
+                    </div>
+                </div>
+
+                <a href="/Books/Show/@book.BookId"><img src="~/Files/@book.ImageId" class="imagine_index" /></a>
+                <br />
+                <h4><a href="/Books/Show/@book.BookId" style="color:black; text-overflow: ellipsis;  display: block;">@book.Title</a> </h4>
+                @foreach (var author in book.Authors)
+                                                {
+                <a href="/Authors/Show/@author.AuthorId" style="color:#5BC0BE">
+                    <p style="text-overflow: ellipsis; text-align:justify;  display: block;">@author.FirstName@author.LastName</p>
+                </a>
+                                                    break;
+                                                 }
+                <br />
+            </div>
+        </div>
+                    }
+
+                }
+
+
+        }
+    </div>
+    <br /><br />
+
+    <br />
+</div>
+
+<br /><br />
+
+<div>
+    <nav aria-label="Page navigation">
+        <ul class="pagination">
+            <li>
+                <a href="/Books/OrderDescStars?page=1" aria-label="Previous">
+                    <span aria-hidden="true">&laquo;</span>
+                </a>
+            </li>
+
+            @for (int i = 1; i <= ViewBag.lastPage; i++)
+            {
+            <li><a href="/Books/OrderDescStars?page=@i">@(i)</a></li>
+            }
+
+            <li>
+                <a href="/Books/OrderDescStars?page=@(ViewBag.lastPage)" aria-label="Next">
+                    <span aria-hidden="true">&raquo;</span>
+                </a>
+            </li>
+        </ul>
+    </nav>
+</div>

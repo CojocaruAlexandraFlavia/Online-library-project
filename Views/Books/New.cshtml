@@ -1,0 +1,101 @@
+﻿
+@model Proiect_DAW2.Models.Book
+
+
+<h2>Adaugare carte</h2>
+
+@using (Html.BeginForm("New", "Books", FormMethod.Post, new { enctype = "multipart/form-data" }))
+{
+<br />
+@Html.Label("Title", "Titlu carte")
+<br />
+@Html.TextArea("Title", null, new { @class = "form-control" })
+<br />
+@Html.ValidationMessageFor(m => m.Title, null, new { @class = "text-danger" })
+<br />
+
+@Html.Label("SelectedAuthors", "Selectati lista de autori")
+<br />
+@Html.DropDownList("SelectedAuthors", new SelectList(Model.Auth, "Value", "Text"), new { @multiple = "multiple" })
+@Html.ValidationMessage("SelectedAuthors", "", new { @class = "text-danger" })
+<br /><br />
+<a href="/Authors/AnotherAuthor" class="btn btn-sm btn-success">Adauga autor nou</a>
+<br />
+@Html.ValidationMessage("AuthorId", null, new { @class = "text-danger" })
+<br />
+
+@Html.Label("Price", "Pret carte")
+<br />
+@Html.TextArea("Price", null, new { @class = "form-control" })
+<br />
+
+@Html.ValidationMessage("Price", "", new { @class = "text-danger" })
+
+
+@Html.Label("NrExemplaries", "Numar exemplare")
+<br />
+@Html.TextArea("NrExemplaries", null, new { @class = "form-control" })
+<br />
+
+@Html.ValidationMessage("NrExemplaries", "", new { @class = "text-danger" })
+
+@Html.Label("PublishingHouse", "Editura carte")
+<br />
+@Html.TextArea("PublishingHouse", null, new { @class = "form-control" })
+<br /><br />
+@Html.ValidationMessage("PublishingHouse", "", new { @class = "text-danger" })
+
+
+@Html.Label("Description", "Descriere")
+<br />
+@Html.TextArea("Description", null, new { @class = "form-control" })
+<br /><br />
+
+
+@Html.Label("Discount", "Discount carte")
+<br />
+@Html.TextArea("Discount", null, new { @class = "form-control" })
+<br /><br />
+
+@Html.ValidationMessage("Discount", "", new { @class = "text-danger" })
+
+<br />
+<label>Selectati categoria</label>
+@Html.DropDownListFor(m => m.CategoryId, new SelectList(Model.Categ, "Value", "Text"), "Selectati categoria", new { @class = "form-control" })
+
+<br />
+    if (ViewBag.esteAdmin || ViewBag.esteColaborator)
+    {
+<a href="/Categories/AnotherCategory" class="btn btn-sm btn-success">Adauga categorie noua</a>
+<br />
+    }
+<br />
+
+@Html.Label("ReleaseYear", "Anul aparitiei")
+<br />
+@Html.TextArea("ReleaseYear", null, new { @class = "form-control" })
+<br /><br />
+@Html.ValidationMessage("ReleaseYear", "", new { @class = "text-danger" })
+
+@Html.Label("Language", "Limba")
+<br />
+@Html.TextArea("Language", null, new { @class = "form-control" })
+<br /><br />
+@Html.ValidationMessage("Language", "", new { @class = "text-danger" })
+
+@Html.Label("NrPages", "Numarul de pagini")
+<br />
+@Html.TextArea("NrPages", null, new { @class = "form-control" })
+<br /><br />
+@Html.ValidationMessage("NrPages", "", new { @class = "text-danger" })
+
+
+@Html.TextBox("Image", null, new { type = "file", @class = "input-file" })
+<br />
+
+<button class="btn btn-sm btn-success" type="submit">Adauga carte</button>
+
+}
+<footer>
+    <p>&copy; @DateTime.Now.Year FLAVIA SI MARIA </p>
+</footer>

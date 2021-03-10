@@ -1,0 +1,96 @@
+﻿
+@model Proiect_DAW2.Models.Book
+
+@{
+    ViewBag.Title = "Edit";
+}
+
+<br /> <br /><br /><br /><br />
+@using (Html.BeginForm(actionName: "Edit", controllerName: "Books"))
+{
+@Html.HttpMethodOverride(HttpVerbs.Put)
+@Html.HiddenFor(m => m.BookId)
+@Html.Label("Title", "Titlu carte"); <br />
+@Html.EditorFor(m => m.Title)
+@Html.ValidationMessage("Title", null, new { @class = "text-danger" })
+<br />  <br />  <br />
+@Html.Label("SelectedAuthors", "Selectati lista de autori")  <br />
+@Html.ListBox("SelectedAuthors", new SelectList(Model.Auth, "Value", "Text"), new { @class = "form-control" })
+<br />  <br />
+@Html.Label("Price", "Pret carte"); <br />
+@Html.EditorFor(m => m.Price)
+@Html.ValidationMessage("Price", null, new { @class = "text-danger" })
+<br />  <br />  <br />
+
+@Html.Label("Description", "Descriere"); <br />
+@Html.EditorFor(m => m.Description)
+@Html.ValidationMessage("Description", null, new { @class = "text-danger" })
+<br />  <br />  <br />
+
+@Html.Label("PublishingHouse", "Editura"); <br />
+@Html.EditorFor(m => m.PublishingHouse)
+@Html.ValidationMessage("PublishingHouse", null, new { @class = "text-danger" })
+<br />  <br />  <br />
+
+@Html.Label("Discount", "Discount"); <br />
+@Html.EditorFor(m => m.Discount)
+@Html.ValidationMessage("Discount", null, new { @class = "text-danger" })
+<br />  <br />  <br />
+
+@Html.Label("NrExemplaries", "Numar exemplare"); <br />
+@Html.EditorFor(m => m.NrExemplaries)
+@Html.ValidationMessage("NrExemplaries", null, new { @class = "text-danger" })
+<br /><br /><br />
+
+@Html.Label("Status", "Status"); <br />
+@Html.EditorFor(m => m.Status)
+@Html.ValidationMessage("Status", null, new { @class = "text-danger" })
+<br />  <br />  <br />
+
+<label>Selectati categoria</label>
+
+@Html.DropDownListFor(m => m.CategoryId,
+    new SelectList(Model.Categ, "Value", "Text"),
+    "Selectati categoria", new { @class = "form-control" })
+@Html.ValidationMessage("CategoryId", null, new { @class = "text-danger" })
+
+<br /><br />
+<!--
+    <label>Imagine actuala</label>
+<br />
+@Html.EditorFor(m => m.ImageId)
+<br /> <br /><br />
+@Html.Label("Image", "Alegeti imaginea")
+<br />
+@Html.TextBox("Image", null, new { type = "file", @class = "input-file" })
+-->
+
+<br />
+
+@Html.Label("ReleaseYear", "Anul aparitiei")
+<br />
+@Html.TextArea("ReleaseYear", null, new { @class = "form-control" })
+<br /><br />
+@Html.ValidationMessage("ReleaseYear", "", new { @class = "text-danger" })
+
+@Html.Label("Language", "Limba")
+<br />
+@Html.TextArea("Language", null, new { @class = "form-control" })
+<br /><br />
+@Html.ValidationMessage("Language", "", new { @class = "text-danger" })
+
+@Html.Label("NrPages", "Numarul de pagini")
+<br />
+@Html.TextArea("NrPages", null, new { @class = "form-control" })
+<br /><br />
+@Html.ValidationMessage("NrPages", "", new { @class = "text-danger" })
+
+<br /><br />
+<button class="btn btn-sm btn-success" type="submit">Modifica carte</button>
+
+}
+
+
+<footer>
+    <p>&copy; @DateTime.Now.Year FLAVIA SI MARIA </p>
+</footer>

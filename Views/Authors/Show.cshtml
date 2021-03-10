@@ -1,0 +1,49 @@
+﻿
+@model Proiect_DAW2.Models.Author
+
+@{
+    ViewBag.Title = "Show";
+}
+
+<br /> <br /><br /><br />
+<div class="continut"style="display:block">
+    <h2 style="padding-left:3%">@Model.FirstName @Model.LastName </h2>
+<ul>
+    @foreach (var book in @Model.Books)
+        {
+    <br />
+    <li> <h3><a href="/Books/Show/@book.BookId" style="color:black">@book.Title</a></h3></li>
+    <p>
+        @foreach (var au in book.Authors)
+                {
+    <p style="color : dodgerblue"><a href="/Authors/Show/@au.AuthorId">@au.FirstName @au.LastName</a> </p>
+                }
+        </p>
+            }
+</ul>
+
+<br /> <br />
+
+    @if (ViewBag.afisareButoane == true && Model.UserId == ViewBag.utilizatorCurent || ViewBag.esteAdmin)
+        {
+
+            using (Html.BeginForm(actionName: "Delete", controllerName: "Authors", method: FormMethod.Post, routeValues: new { id = @Model.AuthorId }))
+            {
+                @Html.HttpMethodOverride(HttpVerbs.Delete)
+                <button class="btn btn-danger pull-right" type="submit">Sterge autor</button>
+            }
+                <a class="btn btn-success pull-left" href="/Authors/Edit/@Model.AuthorId">Modifica autor</a>
+        }
+
+
+<br />  <br />
+<br />  <br />
+
+    <a class="btn btn-primary" href="/Authors/Index" type="submit">Inapoi la autori</a>
+
+
+</div>
+<br /><br />
+<footer>
+    <p>&copy; @DateTime.Now.Year FLAVIA SI MARIA </p>
+</footer>

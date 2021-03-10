@@ -1,0 +1,29 @@
+﻿@model Proiect_DAW2.Models.Author
+
+<br /><br /><br /><br />
+
+
+
+@using (Html.BeginForm(actionName: "Edit", controllerName: "Authors"))
+{
+@Html.HttpMethodOverride(HttpVerbs.Put)
+<br />
+@Html.HiddenFor(m => m.AuthorId)
+
+@Html.Label("FirstName", "Prenume")
+<br />
+@Html.EditorFor(m => m.FirstName)
+@Html.ValidationMessage("FirstName", null, new { @class = "text-danger" })
+<br /><br />
+@Html.Label("LastName", "Nume")
+@Html.ValidationMessage("LastName", null, new { @class = "text-danger" })
+<br />
+@Html.Editor("LastName", new { htmlAttributes = new { @class = "form-control" } })
+<br /><br />
+<button class="btn btn-sm btn-success" type="submit"> Modifica autor </button>
+ }
+
+
+<footer>
+    <p>&copy; @DateTime.Now.Year FLAVIA SI MARIA </p>
+</footer>

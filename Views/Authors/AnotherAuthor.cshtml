@@ -1,0 +1,27 @@
+﻿
+@model Proiect_DAW2.Models.Author
+
+
+<br /><br /><br /><br />
+<h2>Adauga autor</h2>
+
+@using (Html.BeginForm(actionName: "AnotherAuthor", controllerName: "Authors"))
+{
+
+@Html.Label("FirstName", "Prenume")
+<br />
+@Html.TextBox("FirstName", null, new { @class = "form-control" })
+@Html.ValidationMessage("FirstName", null, new { @class = "text-danger" })
+<br /><br />
+@Html.Label("LastName", "Nume")
+<br />
+@Html.TextBox("LastName", null, new { @class = "form-control" })
+@Html.ValidationMessage("LastName", null, new { @class = "text-danger" })
+<br /><br />
+<br />
+<button class="btn btn-sm btn-success" type="submit">Adauga autor</button>
+
+}
+<footer>
+    <p>&copy; @DateTime.Now.Year FLAVIA SI MARIA </p>
+</footer>

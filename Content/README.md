@@ -1,2 +1,2 @@
 
-**Didn't load the Bootstrap files**
+**Didn't upload the Bootstrap files**
